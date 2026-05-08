@@ -38,8 +38,9 @@ const Footer = () => {
           <Text fontSize="sm" fontWeight="700" color="brand.700">
             {t("hero_title")}
           </Text>
-          <Text fontSize="xs" fontWeight="600" color="brand.800" opacity={0.8} maxW="500px">
-            {t("footer_subtitle")}
+          {/* تم استبدال الجملة السابقة بالتوقيع الجديد كما طلبت */}
+          <Text fontSize="sm" fontWeight="600" color="brand.800" opacity={0.9} mt={2}>
+            *Built with ❤️ by Shalee Khalil - 2026*
           </Text>
         </VStack>
       </Flex>

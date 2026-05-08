@@ -1,51 +1,137 @@
 import React from "react";
 import { 
   Box, Container, Heading, SimpleGrid, VStack, Text, 
-  Icon, Link, Badge, Divider, HStack, Tag 
+  HStack, Button, Link, Badge, Icon, Divider, Flex, Tooltip 
 } from "@chakra-ui/react";
-import { FaGoogle, FaBrain, FaCode, FaGraduationCap } from "react-icons/fa";
-import { SiIbm, SiMeta } from "react-icons/si";
+import { 
+  FaGraduationCap, FaCheckCircle, FaExternalLinkAlt, FaAward, 
+  FaBrain, FaRobot, FaChalkboardTeacher, FaUserTie, FaArrowRight, FaArrowLeft 
+} from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 
 const MotionBox = motion(Box);
 
 const Certifications = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const isAr = i18n.language === "ar";
+  const ArrowIcon = isAr ? FaArrowLeft : FaArrowRight;
 
-  const academicPath = [
-    { 
-      degree: isAr ? "ماجستير إدارة الموارد البشرية التطبيقية" : "Master of Applied Human Resource Management", 
-      status: isAr ? "قيد الدراسة حالياً" : "Currently Pursuing",
-      goal: isAr ? "الهدف القادم: دكتوراه في إدارة الأعمال (DBA)" : "Next: PhD in Business Administration (DBA)",
-      url: "https://sites.google.com/view/shaleekhalilresearches"
-    },
-    { degree: isAr ? "الدبلوم البريطاني (2025): ممارس كوتشينج فعال و NLP" : "British Diploma (2025): Effective Coaching & NLP Practitioner", org: "Auspicium (UK)" },
-    { degree: isAr ? "بكالوريوس التعليم الأساسي" : "Bachelor of Basic Education", org: isAr ? "جامعة القدس المفتوحة" : "Al-Quds Open University" }
+  // 1. المهارات والشهادات الموثقة مقسمة حسب المجال
+  const techSection = {
+    title: isAr ? "التقنية والذكاء الاصطناعي" : "Tech & AI",
+    icon: FaRobot,
+    color: "purple.500",
+    linkedCerts: [
+      { name: "Google Project Management", link: "https://www.coursera.org/account/accomplishments/specialization/A1CTHFP66S19" },
+      { name: "Google Data Analytics", link: "https://www.coursera.org/account/accomplishments/specialization/CXSSXUYQUK2Z" },
+      { name: "IT Support Professional", link: "https://www.coursera.org/account/accomplishments/specialization/I277KR9Z7E37" }
+    ],
+    skills: [
+      { name: "Python", color: "blue" },
+      { name: "AI & GenAI", color: "purple" },
+      { name: "Prompt Engineering", color: "pink" },
+      { name: "Machine Learning", color: "purple" },
+      { name: "Full-Stack Dev", color: "orange" },
+      { name: "Cybersecurity", color: "red" }
+    ]
+  };
+
+  const psychSection = {
+    title: isAr ? "العلوم النفسية والكوتشينج" : "Psychology & Coaching",
+    icon: FaBrain,
+    color: "green.500",
+    linkedCerts: [
+      { name: "Abnormal Psychology", link: "https://www.coursera.org/account/accomplishments/specialization/TZ0E4I1PHRE6" },
+      { name: "Psychological First Aid", link: "https://www.coursera.org/account/accomplishments/verify/9NAPCRKIBFB8" },
+      { name: "Health Coaching", link: "https://www.coursera.org/account/accomplishments/verify/UEL4DAW0DNN4" }
+    ],
+    skills: [
+      { name: "Trauma Support", color: "green" },
+      { name: "NLP Practitioner", color: "purple" },
+      { name: "Emotional Intelligence", color: "pink" },
+      { name: "Positive Psychiatry", color: "green" },
+      { name: "Crisis Intervention", color: "red" }
+    ]
+  };
+
+  const leadSkills = [
+    { name: "Agile Management", color: "orange" },
+    { name: "Strategic HRM", color: "orange" },
+    { name: "Leading with Impact", color: "red" },
+    { name: "Change Management", color: "orange" }
   ];
 
-  const googleCerts = [
-    "Data Analytics", "Google AI Professional", "Project Management", "UX Design", 
-    "Cybersecurity", "IT Support", "Digital Marketing & E-commerce", 
-    "Prompting Essentials", "People Management Essentials"
+  const eduSkills = [
+    { name: "Instructional Design", color: "teal" },
+    { name: "E-Learning", color: "teal" },
+    { name: "TOT Certified", color: "green" },
+    { name: "Teaching Strategies", color: "green" }
   ];
 
-  const engineeringCerts = [
-    { title: "Meta Full-Stack Engineer", icon: SiMeta, url: "https://www.coursera.org/account/accomplishments/specialization/UGELP6MYNCJY" },
-    { title: "IBM Full Stack Developer", icon: SiIbm, url: "https://www.coursera.org/account/accomplishments/specialization/W9D3R7395EI3" },
-    { title: "Meta iOS Developer", icon: SiMeta },
-    { title: "Meta Android Developer", icon: SiMeta },
-    { title: "IBM Data Engineering", icon: SiIbm },
-    { title: "IBM DevOps & Software Engineering", icon: SiIbm }
+  const education = [
+    { year: "Future", titleAr: "دكتوراه DBA", titleEn: "Doctorate DBA", descAr: "أنسنة بيئات العمل الرقمية", isFuture: true },
+    { year: "2026", titleAr: "ماجستير إدارة الموارد البشرية", titleEn: "Master's HRM", badge: "In Progress" },
+    { year: "2023", titleAr: "دبلوم عالي: تأهيل معلمين", titleEn: "Higher Diploma: Teacher Qual." },
+    { year: "2021", titleAr: "دبلوم مهني: تصميم التعليم", titleEn: "Professional Diploma: EdTech" },
+    { year: "2015", titleAr: "بكالوريوس التعليم الأساسي", titleEn: "Bachelor's Basic Education" }
   ];
 
-  const psychCerts = [
-    { name: isAr ? "علم النفس غير الطبيعي" : "Abnormal Psychology", org: "Wesleyan" },
-    { name: isAr ? "سيكولوجية الصدمة والقلق" : "Trauma & Anxiety Psychology", org: "APA" },
-    { name: isAr ? "الإسعافات الأولية النفسية" : "Psychological First Aid", org: "Johns Hopkins" },
-    { name: isAr ? "الطب النفسي الإيجابي" : "Positive Psychiatry", org: "Sydney" }
-  ];
+  // مكون الصندوق الزجاجي للمهارات
+  const SkillMatrixBox = ({ sectionData }) => (
+    <MotionBox 
+      className="glass-card" 
+      p={6} 
+      h="full" 
+      bg="whiteAlpha.200" 
+      backdropFilter="blur(10px)"
+      whileHover={{ y: -10, boxShadow: "2xl", bg: "whiteAlpha.300" }}
+      transition={{ duration: 0.3 }}
+    >
+      <VStack align="stretch" spacing={5}>
+        <HStack justify="space-between">
+          <HStack spacing={3}>
+            <Icon as={sectionData.icon} color={sectionData.color} boxSize={6} />
+            <Heading size="md" color="brand.800">{sectionData.title}</Heading>
+          </HStack>
+          <Icon as={ArrowIcon} color="brand.400" />
+        </HStack>
+
+        {/* التوثيقات المباشرة لكل مجال */}
+        {sectionData.linkedCerts && (
+          <VStack align="stretch" spacing={2} pb={2}>
+            {sectionData.linkedCerts.map((cert, idx) => (
+              <HStack key={idx} justify="space-between" p={2} borderRadius="md" bg="whiteAlpha.400" fontSize="xs">
+                <Text fontWeight="bold">{cert.name}</Text>
+                <Button as={Link} href={cert.link} isExternal size="2xs" colorScheme="blue" variant="ghost" rightIcon={<FaExternalLinkAlt />}>Verify</Button>
+              </HStack>
+            ))}
+          </VStack>
+        )}
+
+        <Divider borderColor="whiteAlpha.400" />
+
+        {/* المهارات على شكل دوائر صغيرة منبثقة */}
+        <Flex flexWrap="wrap" gap={3}>
+          {sectionData.skills.map((skill, idx) => (
+            <MotionBox key={idx} whileHover={{ scale: 1.2 }}>
+              <Badge 
+                colorScheme={skill.color} 
+                variant="solid" 
+                px={3} py={1} 
+                borderRadius="full" 
+                fontSize="2xs" 
+                textTransform="none"
+                cursor="default"
+              >
+                {skill.name}
+              </Badge>
+            </MotionBox>
+          ))}
+        </Flex>
+      </VStack>
+    </MotionBox>
+  );
 
   return (
     <Box py="100px" minH="100vh">
@@ -53,70 +139,75 @@ const Certifications = () => {
         <VStack spacing={16} align="stretch">
           
           <VStack spacing={4} textAlign="center">
-            <Heading size="2xl" color="brand.900" fontWeight="900">{t("learning_journey_title")}</Heading>
+            <Heading size="2xl" color="brand.900" fontWeight="900">
+              {isAr ? "الاعتمادات والمحراب العلمي" : "Accreditations & Sanctuary"}
+            </Heading>
             <Box w="100px" h="5px" bg="brand.500" borderRadius="full" />
           </VStack>
 
+          {/* المسار الأكاديمي الزجاجي */}
           <Box>
-            <HStack mb={8}><Icon as={FaGraduationCap} w={8} h={8} color="brand.600"/><Heading size="xl" color="brand.900">{isAr ? "المسار الأكاديمي" : "Academic Path"}</Heading></HStack>
-            <VStack spacing={6}>
-              {academicPath.map((item, i) => (
-                <Box key={i} className="glass-card" p={8} w="full" borderLeft={isAr ? "none" : "6px solid #0c4a6e"} borderRight={isAr ? "6px solid #0c4a6e" : "none"}>
-                  <VStack align="start" spacing={2}>
-                    <Tag colorScheme="blue" variant="solid" borderRadius="full">{item.org || item.status}</Tag>
-                    <Text fontSize="xl" fontWeight="800" color="brand.900">{item.degree}</Text>
-                    {item.goal && <Text color="brand.600" fontWeight="bold">✦ {item.goal}</Text>}
-                    {item.url && <Link href={item.url} isExternal color="blue.500" fontWeight="bold" fontSize="sm">{isAr ? "استعراض الأبحاث ↗" : "View Research ↗"}</Link>}
-                  </VStack>
-                </Box>
+            <HStack mb={8} spacing={4}>
+              <Icon as={FaGraduationCap} boxSize={8} color="brand.500" />
+              <Heading size="lg">المسار الأكاديمي</Heading>
+              <Icon as={ArrowIcon} color="brand.500" boxSize={5} />
+            </HStack>
+            <VStack align="stretch" spacing={4}>
+              {education.map((edu, i) => (
+                <MotionBox 
+                  key={i} 
+                  className="glass-card" 
+                  p={5} 
+                  bg="whiteAlpha.200"
+                  backdropFilter="blur(10px)"
+                  borderLeft={edu.isFuture ? "6px solid #805AD5" : "none"}
+                  whileHover={{ scale: 1.02, bg: "whiteAlpha.300", x: isAr ? -10 : 10 }}
+                >
+                  <HStack justify="space-between">
+                    <VStack align="start" spacing={0}>
+                      <Badge colorScheme={edu.isFuture ? "purple" : "teal"}>{edu.year}</Badge>
+                      <Text fontWeight="bold" fontSize="lg" color="brand.900">{isAr ? edu.titleAr : edu.titleEn}</Text>
+                      {edu.descAr && <Text fontSize="xs" opacity={0.7}>{isAr ? edu.descAr : edu.descEn}</Text>}
+                    </VStack>
+                    {edu.badge && <Badge colorScheme="orange" variant="solid">{edu.badge}</Badge>}
+                  </HStack>
+                </MotionBox>
               ))}
             </VStack>
           </Box>
 
+          {/* مصفوفة الكفايات التخصصية - إعادة توزيع الشهادات والمهارات */}
           <Box>
-            <HStack mb={8}><Icon as={FaGoogle} w={8} h={8} color="red.500"/><Heading size="xl" color="brand.900">Google Professional Suite</Heading></HStack>
-            <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
-              {googleCerts.map((cert, i) => (
-                <MotionBox key={i} className="glass-card" p={6} whileHover={{ y: -5 }}>
-                  <Text fontWeight="800" color="brand.900" mb={2}>{cert}</Text>
-                  <Badge colorScheme="red" variant="subtle">Professional</Badge>
-                </MotionBox>
-              ))}
+            <HStack mb={8} spacing={4}>
+              <Icon as={FaAward} boxSize={8} color="brand.500" />
+              <Heading size="lg">مصفوفة الكفايات التخصصية</Heading>
+              <Icon as={ArrowIcon} color="brand.500" boxSize={5} />
+            </HStack>
+            <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={8}>
+              {/* قسم التقنية */}
+              <SkillMatrixBox sectionData={techSection} />
+              
+              {/* قسم النفسية */}
+              <SkillMatrixBox sectionData={psychSection} />
+
+              {/* قسم الإدارة */}
+              <SkillMatrixBox sectionData={{
+                title: isAr ? "القيادة والإدارة" : "Leadership & Mgmt",
+                icon: FaUserTie,
+                color: "orange.500",
+                skills: leadSkills
+              }} />
+
+              {/* قسم التعليم */}
+              <SkillMatrixBox sectionData={{
+                title: isAr ? "التعليم وتصميم المحتوى" : "Education & Design",
+                icon: FaChalkboardTeacher,
+                color: "teal.500",
+                skills: eduSkills
+              }} />
             </SimpleGrid>
           </Box>
 
-          <Box>
-            <HStack mb={8}><Icon as={FaCode} w={8} h={8} color="brand.600"/><Heading size="xl" color="brand.900">{isAr ? "الهندسة وتطوير البرمجيات" : "Software Engineering"}</Heading></HStack>
-            <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
-              {engineeringCerts.map((cert, i) => (
-                <HStack key={i} p={6} bg="whiteAlpha.900" borderRadius="2xl" border="2px solid" borderColor="brand.900" shadow="md" transition="0.3s" _hover={{ shadow: "xl", transform: "translateY(-5px)" }}>
-                  <Icon as={cert.icon} w={10} h={10} color="brand.900" />
-                  <VStack align="start" spacing={0}>
-                    <Text fontWeight="900" color="brand.900" fontSize="lg">{cert.title}</Text>
-                    {cert.url ? (
-                      <Link href={cert.url} isExternal fontSize="xs" color="blue.600" fontWeight="bold">Verify Credential</Link>
-                    ) : (
-                      <Text fontSize="xs" color="gray.500">Professional Certification</Text>
-                    )}
-                  </VStack>
-                </HStack>
-              ))}
-            </SimpleGrid>
-          </Box>
-
-          <Box>
-            <HStack mb={8}><Icon as={FaBrain} w={8} h={8} color="purple.500"/><Heading size="xl" color="brand.900">{isAr ? "اعتمادات القيادة وعلم النفس" : "Psychology & Leadership"}</Heading></HStack>
-            <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={6}>
-              {psychCerts.map((cert, i) => (
-                <Box key={i} className="glass-card" p={6} textAlign="center">
-                  <VStack spacing={3}>
-                    <Tag colorScheme="purple" variant="solid">{cert.org}</Tag>
-                    <Text fontWeight="800" color="brand.900">{cert.name}</Text>
-                  </VStack>
-                </Box>
-              ))}
-            </SimpleGrid>
-          </Box>
         </VStack>
       </Container>
     </Box>

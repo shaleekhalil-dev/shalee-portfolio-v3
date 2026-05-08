@@ -9,11 +9,14 @@ import { Link as RouterLink } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const MotionBox = motion(Box);
+const MotionImage = motion(Image);
 
 const LandingSection = () => {
   const { t, i18n } = useTranslation();
   const isAr = i18n.language === "ar";
-  const profileImg = "https://media.licdn.com/dms/image/v2/D4D03AQE1S9G5R7-Y2A/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1714157585350?e=1720656000&v=beta&t=9vO9yvY7S7z4o3n6z7-v3";
+  
+  // تحديث الصورة لرابط مباشر عالي الجودة مع خاصية التصغير الذكي
+  const profileImg = "https://drive.google.com/thumbnail?id=18B6gq5r6kbxn2-6j_XJaJi2LT5BZvvMO&sz=w1000";
 
   return (
     <Box as="section" id="home" minH="90vh" display="flex" alignItems="center" py={{ base: "80px", md: "0" }}>
@@ -58,9 +61,21 @@ const LandingSection = () => {
               transition={{ duration: 1 }}
               position="relative"
               padding="10px"
+              whileHover={{ scale: 1.03 }} // تأثير الانبثاق الناعم عند التمرير على الحاوية
             >
               <Box position="absolute" top="0" left="0" right="0" bottom="0" bg="brand.200" borderRadius="30% 70% 70% 30% / 30% 30% 70% 70%" opacity="0.4" />
-              <Image src={profileImg} alt="Shalee Khalil" borderRadius="full" boxSize={{ base: "280px", md: "380px" }} objectFit="cover" border="6px solid white" shadow="2xl" />
+              
+              <MotionImage 
+                src={profileImg} 
+                alt="Shalee Khalil" 
+                borderRadius="full" 
+                boxSize={{ base: "280px", md: "380px" }} 
+                objectFit="cover" 
+                border="6px solid white" 
+                shadow="2xl"
+                whileHover={{ scale: 1.05 }} // تأثير الانبثاق الخاص بالصورة نفسها
+                transition={{ type: "spring", stiffness: 300 }}
+              />
             </MotionBox>
           </Flex>
         </Stack>
